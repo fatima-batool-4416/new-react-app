@@ -9,6 +9,11 @@ const FormContainer = styled(Form)`
   margin-bottom: 20px;
 `;
 
+const FormHeading = styled.h2`
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span: 16 },
@@ -32,14 +37,14 @@ const onFinish = (values: any) => {
 };
 
 const App: React.FC = () => (
-  
-  <Form
+  <FormContainer
     {...layout}
     name="nest-messages"
     onFinish={onFinish}
     style={{ maxWidth: 600 }}
     validateMessages={validateMessages}
   >
+    <FormHeading>Form 1</FormHeading>
     <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
       <Input />
     </Form.Item>
@@ -60,7 +65,7 @@ const App: React.FC = () => (
         Submit
       </Button>
     </Form.Item>
-  </Form>
+  </FormContainer>
 );
 
 export default App;

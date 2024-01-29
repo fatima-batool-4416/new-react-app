@@ -1,12 +1,16 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { AutoComplete, Form, Input, Select, Button } from "antd";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import { AutoComplete, Form, Input, Select, Button } from 'antd';
 
 const FormContainer = styled(Form)`
-  /* Add your styling here */
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
+  margin-bottom: 20px;
+`;
+
+const Form2 = styled.h2`
+  text-align: center;
   margin-bottom: 20px;
 `;
 
@@ -21,12 +25,12 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
+
 const App: React.FC = () => {
-  <h1>Form1</h1>
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    console.log('Received values of form: ', values);
   };
 
   const prefixSelector = (
@@ -37,15 +41,14 @@ const App: React.FC = () => {
       </Select>
     </Form.Item>
   );
+
   const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
 
   const onWebsiteChange = (value: string) => {
     if (!value) {
       setAutoCompleteResult([]);
     } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
+      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
     }
   };
 
@@ -55,94 +58,84 @@ const App: React.FC = () => {
   }));
 
   return (
-    
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      style={{ maxWidth: 600 }}
-      scrollToFirstError
-    >
-      <Form.Item
-        name="password"
-        label="Password"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-        hasFeedback
+    <Form2>
+      <FormContainer
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        style={{ maxWidth: 600 }}
+        scrollToFirstError
       >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="confirm"
-        label="Confirm Password"
-        dependencies={["password"]}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Please confirm your password!",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(
-                new Error("The new password that you entered do not match!")
-              );
+        <Form2>Form 2</Form2>
+        <Form.Item
+          name="password"
+          label="Password"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your password!',
             },
-          }),
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
+          ]}
+          hasFeedback
+        >
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item
-        name="nickname"
-        label="Nickname"
-        tooltip="What do you want others to call you?"
-        rules={[
-          {
-            required: true,
-            message: "Please input your nickname!",
-            whitespace: true,
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="phone"
-        label="Phone Number"
-        rules={[{ required: true, message: "Please input your phone number!" }]}
-      >
-        <Input addonBefore={prefixSelector} style={{ width: "100%" }} />
-      </Form.Item>
-      <Form.Item
-        name="website"
-        label="Website"
-        rules={[{ required: true, message: "Please input website!" }]}
-      >
-        <AutoComplete
-          options={websiteOptions}
-          onChange={onWebsiteChange}
-          placeholder="website"
+        <Form.Item
+          name="confirm"
+          label="Confirm Password"
+          dependencies={['password']}
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: 'Please confirm your password!',
+            },
+            ({ getFieldValue }) => ({
+              validator(_, value) {
+                if (!value || getFieldValue('password') === value) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error('The new password that you entered do not match!'));
+              },
+            }),
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name="nickname"
+          label="Nickname"
+          tooltip="What do you want others to call you?"
+          rules={[{ required: true, message: 'Please input your nickname!', whitespace: true }]}
         >
           <Input />
-        </AutoComplete>
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        </Form.Item>
+        <Form.Item
+          name="phone"
+          label="Phone Number"
+          rules={[{ required: true, message: 'Please input your phone number!' }]}
+        >
+          <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+        </Form.Item>
+        <Form.Item
+          name="website"
+          label="Website"
+          rules={[{ required: true, message: 'Please input website!' }]}
+        >
+          <AutoComplete options={websiteOptions} onChange={onWebsiteChange} placeholder="website">
+            <Input />
+          </AutoComplete>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </FormContainer>
+    </Form2>
   );
 };
 
