@@ -1,43 +1,66 @@
-// src/components/forms/Form1.tsx
 import React from 'react';
 import styled from 'styled-components';
-import { Form, Input, Button } from 'antd';
+import { Button, Form, Input, InputNumber } from 'antd';
 
 const FormContainer = styled(Form)`
-  /* Add your styling here */
   padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 20px;
 `;
 
-const Form1: React.FC = () => {
-  return (
-    <FormContainer>
-      <h2>Form 1</h2>
-      <Form.Item label="Field 1" name="field1" rules={[{ required: true, message: 'Please input Field 1!' }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item label="Field 2" name="field2" rules={[{ required: true, message: 'Please input Field 2!' }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item label="Field 3" name="field3" rules={[{ required: true, message: 'Please input Field 3!' }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item label="Field 4" name="field4" rules={[{ required: true, message: 'Please input Field 4!' }]}>
-        <Input />
-      </Form.Item>
-
-      <Form.Item label="Field 5" name="field5" rules={[{ required: true, message: 'Please input Field 5!' }]}>
-        <Input />
-      </Form.Item>
-
-      <Button type="primary" htmlType="submit">Submit Form 1</Button>
-    </FormContainer>
-  );
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
 };
 
-export default Form1;
+/* eslint-disable no-template-curly-in-string */
+const validateMessages = {
+  required: '${label} is required!',
+  types: {
+    email: '${label} is not a valid email!',
+    number: '${label} is not a valid number!',
+  },
+  number: {
+    range: '${label} must be between ${min} and ${max}',
+  },
+};
+/* eslint-enable no-template-curly-in-string */
+
+const onFinish = (values: any) => {
+  console.log(values);
+};
+
+const App: React.FC = () => (
+  
+  <Form
+    {...layout}
+    name="nest-messages"
+    onFinish={onFinish}
+    style={{ maxWidth: 600 }}
+    validateMessages={validateMessages}
+  >
+    <Form.Item name={['user', 'name']} label="Name" rules={[{ required: true }]}>
+      <Input />
+    </Form.Item>
+    <Form.Item name={['user', 'email']} label="Email" rules={[{ type: 'email' }]}>
+      <Input />
+    </Form.Item>
+    <Form.Item name={['user', 'age']} label="Age" rules={[{ type: 'number', min: 0, max: 99 }]}>
+      <InputNumber />
+    </Form.Item>
+    <Form.Item name={['user', 'website']} label="Website">
+      <Input />
+    </Form.Item>
+    <Form.Item name={['user', 'introduction']} label="Introduction">
+      <Input.TextArea />
+    </Form.Item>
+    <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+      <Button type="primary" htmlType="submit">
+        Submit
+      </Button>
+    </Form.Item>
+  </Form>
+);
+
+export default App;
