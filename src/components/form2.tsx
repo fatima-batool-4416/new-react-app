@@ -7,6 +7,7 @@ const FormContainer = styled(Form)`
   border: 1px solid #ddd;
   border-radius: 8px;
   margin-bottom: 20px;
+  color: white;
 `;
 
 const Form2 = styled.h2`
