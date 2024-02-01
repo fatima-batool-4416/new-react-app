@@ -1,6 +1,6 @@
 import React from 'react'
 
-function store() {
+function downloadpdf() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function store() {
   )
 }
 
-export default store
+export default downloadpdf
